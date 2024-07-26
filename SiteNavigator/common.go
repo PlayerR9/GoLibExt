@@ -1,7 +1,6 @@
 package SiteNavigator
 
 import (
-	_ "github.com/PlayerR9/treenode"
 	"github.com/chromedp/chromedp"
 	"golang.org/x/net/html"
 )
@@ -24,5 +23,3 @@ type WaitFunc func(url string) chromedp.Tasks
 //   - T: The data extracted from the HTML.
 //   - error: The error that occurred while extracting the data.
 type ExtractFunc[T any] func(doc *html.Node) (T, error)
-
-//go:generate go run github.com/PlayerR9/treenode/cmd/treenode -type=TreeNode -fields=Data/*html.Node -output=treenode.go

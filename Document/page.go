@@ -4,8 +4,8 @@ import (
 	"errors"
 	"fmt"
 
-	fss "github.com/PlayerR9/MyGoLib/Displays/Section"
 	ffs "github.com/PlayerR9/MyGoLib/Formatting/FString"
+	fss "github.com/PlayerR9/display/Displays/Section"
 )
 
 const (

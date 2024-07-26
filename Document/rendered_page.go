@@ -1,7 +1,7 @@
 package Document
 
 import (
-	fss "github.com/PlayerR9/MyGoLib/Displays/Section"
+	fss "github.com/PlayerR9/display/Displays/Section"
 )
 
 // RenderedPage is a type that represents a page of a document.

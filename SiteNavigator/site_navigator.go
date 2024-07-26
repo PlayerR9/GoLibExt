@@ -5,8 +5,8 @@ import (
 
 	uc "github.com/PlayerR9/MyGoLib/Units/common"
 	slext "github.com/PlayerR9/MyGoLib/Units/slice"
-	tr "github.com/PlayerR9/tree/Tree"
-	tn "github.com/PlayerR9/treenode"
+	trb "github.com/PlayerR9/tree/builder"
+	tr "github.com/PlayerR9/tree/tree"
 )
 
 var (
@@ -14,13 +14,13 @@ var (
 	IsTextNodeSearch slext.PredicateFilter[*html.Node]
 
 	// GetChildrenFunc is a function that returns the children of an HTML node.
-	GetChildrenFunc tr.NextsFunc
+	GetChildrenFunc trb.NextsFunc[*html.Node]
 )
 
 func init() {
 	IsTextNodeSearch = NewSearchCriteria(html.TextNode).Build()
 
-	GetChildrenFunc = func(n tn.Noder, info tr.Infoer) ([]tn.Noder, error) {
+	GetChildrenFunc = func(n tr.Noder, info tr.Infoer) ([]tr.Noder, error) {
 		if n == nil {
 			err := uc.NewErrNilParameter("n")
 			return nil, err
@@ -34,10 +34,10 @@ func init() {
 			return nil, err
 		}
 
-		var children []tn.Noder
+		var children []tr.Noder
 
 		for c := elem.Data.FirstChild; c != nil; c = c.NextSibling {
-			new_n := tn.NewTreeNode(c)
+			new_n := NewTreeNode(c)
 
 			children = append(children, new_n)
 		}

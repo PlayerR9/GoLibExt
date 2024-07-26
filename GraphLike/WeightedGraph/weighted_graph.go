@@ -2,8 +2,9 @@ package WeightedGraph
 
 import (
 	uc "github.com/PlayerR9/MyGoLib/Units/common"
-	tr "github.com/PlayerR9/tree/Tree"
-	tn "github.com/PlayerR9/treenode"
+	tn "github.com/PlayerR9/tree"
+	trb "github.com/PlayerR9/tree/builder"
+	tr "github.com/PlayerR9/tree/tree"
 )
 
 // WeightFunc is a function that calculates the weight of an edge.
@@ -108,19 +109,19 @@ func (g *Graph[T]) AdjacentOf(from T) []T {
 // MakeTree creates a tree of the graph with the given root.
 //
 // Parameters:
-//   - root: the root of the tree.
+//   - data: the data of the root.
 //   - f: the nexts function.
 //
 // Returns:
 //   - *WeightedGraphTree: the tree of the graph.
 //   - error: an error if the tree creation fails.
-func (g *Graph[T]) MakeTree(root tn.Noder, info uc.Objecter, f tr.NextsFunc) (*tr.Tree, error) {
-	var builder tr.Builder
+func (g *Graph[T]) MakeTree(data T, info uc.Objecter, f trb.NextsFunc[T]) (*tr.Tree[*tn.TreeNode[T]], error) {
+	var builder trb.Builder[T]
 
 	builder.SetInfo(info)
 	builder.SetNextFunc(f)
 
-	return builder.Build(root)
+	return builder.Build(data)
 }
 
 // GetVertices returns the vertices in the graph.
