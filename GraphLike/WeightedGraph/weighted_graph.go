@@ -3,7 +3,6 @@ package WeightedGraph
 import (
 	uc "github.com/PlayerR9/MyGoLib/Units/common"
 	tn "github.com/PlayerR9/tree"
-	trb "github.com/PlayerR9/tree/builder"
 	tr "github.com/PlayerR9/tree/tree"
 )
 
@@ -115,13 +114,13 @@ func (g *Graph[T]) AdjacentOf(from T) []T {
 // Returns:
 //   - *WeightedGraphTree: the tree of the graph.
 //   - error: an error if the tree creation fails.
-func (g *Graph[T]) MakeTree(data T, info uc.Objecter, f trb.NextsFunc[T]) (*tr.Tree[*tn.TreeNode[T]], error) {
-	var builder trb.Builder[T]
+func (g *Graph[T]) MakeTree(data T, info uc.Objecter, f tr.NextsFunc[*tn.TreeNode[T]]) (*tr.Tree[*tn.TreeNode[T]], error) {
+	var builder tr.Builder[*tn.TreeNode[T]]
 
 	builder.SetInfo(info)
 	builder.SetNextFunc(f)
 
-	return builder.Build(data)
+	return builder.Build(tn.NewTreeNode(data))
 }
 
 // GetVertices returns the vertices in the graph.

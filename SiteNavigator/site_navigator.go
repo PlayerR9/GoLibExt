@@ -5,7 +5,6 @@ import (
 
 	uc "github.com/PlayerR9/MyGoLib/Units/common"
 	slext "github.com/PlayerR9/MyGoLib/Units/slice"
-	trb "github.com/PlayerR9/tree/builder"
 	tr "github.com/PlayerR9/tree/tree"
 )
 
@@ -14,13 +13,13 @@ var (
 	IsTextNodeSearch slext.PredicateFilter[*html.Node]
 
 	// GetChildrenFunc is a function that returns the children of an HTML node.
-	GetChildrenFunc trb.NextsFunc[*html.Node]
+	GetChildrenFunc tr.NextsFunc[*TreeNode]
 )
 
 func init() {
 	IsTextNodeSearch = NewSearchCriteria(html.TextNode).Build()
 
-	GetChildrenFunc = func(n tr.Noder, info tr.Infoer) ([]tr.Noder, error) {
+	GetChildrenFunc = func(n *TreeNode, info tr.Infoer) ([]*TreeNode, error) {
 		if n == nil {
 			err := uc.NewErrNilParameter("n")
 			return nil, err
@@ -68,7 +67,7 @@ func GetDirectChildren(node *html.Node) []*html.Node {
 // HtmlTree is a struct that represents an HTML tree.
 type HtmlTree struct {
 	// The tree constructed from the HTML node.
-	tree *tr.Tree
+	tree *tr.Tree[*TreeNode]
 }
 
 // NewHtmlTree constructs a tree from an HTML node.
@@ -83,18 +82,20 @@ type HtmlTree struct {
 // Errors:
 //   - *uc.ErrNilValue: If any html.Node is nil.
 func NewHtmlTree(root *html.Node) (*HtmlTree, error) {
-	var builder tr.Builder
+	var builder tr.Builder[*TreeNode]
 
 	builder.SetNextFunc(GetChildrenFunc)
 
-	n := tn.NewTreeNode(root)
+	n := NewTreeNode(root)
 
 	tree, err := builder.Build(n)
 	if err != nil {
 		return nil, err
 	}
 
-	ht := &HtmlTree{tree: tree}
+	ht := &HtmlTree{
+		tree: tree,
+	}
 
 	return ht, nil
 }
@@ -116,10 +117,7 @@ func (t *HtmlTree) ExtractSpecificNode(matchFun slext.PredicateFilter[*html.Node
 		panic("Case not handled: matchFun is nil")
 	}
 
-	children, err := t.tree.GetDirectChildren()
-	if err != nil {
-		return nil, err
-	}
+	children := t.tree.GetDirectChildren()
 	if len(children) == 0 {
 		return nil, nil
 	}
@@ -127,10 +125,7 @@ func (t *HtmlTree) ExtractSpecificNode(matchFun slext.PredicateFilter[*html.Node
 	S := make([]*html.Node, 0, len(children))
 
 	for _, child := range children {
-		n, ok := child.(*TreeNode)
-		uc.Assert(ok, "ExtractSpecificNode: child is not a *TreeNode")
-
-		S = append(S, n.Data)
+		S = append(S, child.Data)
 	}
 
 	S = slext.SliceFilter(S, matchFun)
@@ -156,21 +151,18 @@ func (t *HtmlTree) MatchNodes(matchFun slext.PredicateFilter[*html.Node]) ([]*ht
 
 	var solution []*html.Node
 
-	f := func(node tn.Noder, info tr.Infoer) (bool, error) {
+	f := func(node *TreeNode, info tr.Infoer) (bool, error) {
 		if node == nil {
 			err := uc.NewErrNilParameter("node")
 			return false, err
 		}
 
-		n, ok := node.(*TreeNode)
-		uc.Assert(ok, "MatchNodes: node is not a *TreeNode")
-
-		ok = matchFun(n.Data)
+		ok := matchFun(node.Data)
 		if !ok {
 			return true, nil
 		}
 
-		solution = append(solution, n.Data)
+		solution = append(solution, node.Data)
 		return false, nil
 	}
 
@@ -198,21 +190,18 @@ func (t *HtmlTree) ExtractContentFromDocument(matchFun slext.PredicateFilter[*ht
 
 	var solution *html.Node
 
-	f := func(node tn.Noder, info tr.Infoer) (bool, error) {
+	f := func(node *TreeNode, info tr.Infoer) (bool, error) {
 		if node == nil {
 			err := uc.NewErrNilParameter("node")
 			return false, err
 		}
 
-		n, ok := node.(*TreeNode)
-		uc.Assert(ok, "ExtractContentFromDocument: node is not a *TreeNode")
-
-		ok = matchFun(n.Data)
+		ok := matchFun(node.Data)
 		if !ok {
 			return true, nil
 		}
 
-		solution = n.Data
+		solution = node.Data
 		return false, nil
 	}
 
@@ -278,10 +267,7 @@ func (t *HtmlTree) ExtractNodes(criterias ...slext.PredicateFilter[*html.Node]) 
 	for _, t := range todo {
 		root := t.tree.Root()
 
-		val, ok := root.(*TreeNode)
-		uc.Assert(ok, "ExtractNodes: root is not a *TreeNode")
-
-		solution = append(solution, val.Data)
+		solution = append(solution, root.Data)
 	}
 
 	return solution, nil
