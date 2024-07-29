@@ -3,8 +3,8 @@ package SiteNavigator
 import (
 	"fmt"
 
-	uc "github.com/PlayerR9/MyGoLib/Units/common"
-	us "github.com/PlayerR9/MyGoLib/Units/slice"
+	uc "github.com/PlayerR9/lib_units/common"
+	us "github.com/PlayerR9/lib_units/slices"
 	lls "github.com/PlayerR9/stack/stack"
 	"golang.org/x/net/html"
 )

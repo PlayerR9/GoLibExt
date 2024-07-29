@@ -3,8 +3,8 @@ package SiteNavigator
 import (
 	"golang.org/x/net/html"
 
-	uc "github.com/PlayerR9/MyGoLib/Units/common"
-	slext "github.com/PlayerR9/MyGoLib/Units/slice"
+	uc "github.com/PlayerR9/lib_units/common"
+	slext "github.com/PlayerR9/lib_units/slices"
 	tr "github.com/PlayerR9/tree/tree"
 )
 
@@ -25,17 +25,14 @@ func init() {
 			return nil, err
 		}
 
-		elem, ok := n.(*TreeNode)
-		uc.Assert(ok, "GetChildrenFunc: n is not a *tr.TreeNode[*html.Node]")
-
-		if elem.Data == nil {
+		if n.Data == nil {
 			err := uc.NewErrNilParameter("n.Data")
 			return nil, err
 		}
 
-		var children []tr.Noder
+		var children []*TreeNode
 
-		for c := elem.Data.FirstChild; c != nil; c = c.NextSibling {
+		for c := n.Data.FirstChild; c != nil; c = c.NextSibling {
 			new_n := NewTreeNode(c)
 
 			children = append(children, new_n)

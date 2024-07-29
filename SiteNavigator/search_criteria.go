@@ -5,8 +5,8 @@ import (
 
 	"golang.org/x/net/html"
 
-	uc "github.com/PlayerR9/MyGoLib/Units/common"
-	slext "github.com/PlayerR9/MyGoLib/Units/slice"
+	uc "github.com/PlayerR9/lib_units/common"
+	slext "github.com/PlayerR9/lib_units/slices"
 )
 
 // AttrPair is a struct that encapsulates an attribute key-value pair and a filter function.

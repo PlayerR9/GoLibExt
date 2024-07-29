@@ -1,7 +1,7 @@
 package WeightedGraph
 
 import (
-	uc "github.com/PlayerR9/MyGoLib/Units/common"
+	uc "github.com/PlayerR9/lib_units/common"
 	tn "github.com/PlayerR9/tree"
 	tr "github.com/PlayerR9/tree/tree"
 )
