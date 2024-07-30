@@ -1,7 +1,7 @@
 package GoLibExt
 
 import (
-	_ "github.com/PlayerR9/go_generator/Generator"
+	_ "github.com/PlayerR9/lib_units/generator"
 	_ "github.com/PlayerR9/tree"
 )
 

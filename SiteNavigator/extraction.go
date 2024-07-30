@@ -5,7 +5,7 @@ import (
 
 	uc "github.com/PlayerR9/lib_units/common"
 	us "github.com/PlayerR9/lib_units/slices"
-	lls "github.com/PlayerR9/stack/stack"
+	lls "github.com/PlayerR9/listlike/stack"
 	"golang.org/x/net/html"
 )
 
