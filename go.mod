@@ -3,21 +3,21 @@ module github.com/PlayerR9/GoLibExt
 go 1.22.5
 
 require (
-	github.com/chromedp/chromedp v0.9.5
+	github.com/chromedp/chromedp v0.10.0
 	golang.org/x/net v0.27.0
 )
 
-require github.com/PlayerR9/listlike v0.1.0
+require github.com/PlayerR9/listlike v0.1.2
 
 require (
-	github.com/PlayerR9/lib_units v0.1.1
+	github.com/PlayerR9/lib_units v0.1.7
 	golang.org/x/exp v0.0.0-20240719175910-8a7402abbf56 // indirect
 )
 
 require (
-	github.com/PlayerR9/MyGoLib v0.4.8
-	github.com/PlayerR9/tree v0.1.10
-	github.com/chromedp/cdproto v0.0.0-20240721024200-dac8efcb39ce
+	github.com/PlayerR9/MyGoLib v0.4.9
+	github.com/PlayerR9/tree v0.1.11
+	github.com/chromedp/cdproto v0.0.0-20240801214329-3f85d328b335
 	github.com/chromedp/sysutil v1.0.0 // indirect
 	github.com/gobwas/httphead v0.1.0 // indirect
 	github.com/gobwas/pool v0.2.1 // indirect

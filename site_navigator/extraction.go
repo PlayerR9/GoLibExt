@@ -1,4 +1,4 @@
-package SiteNavigator
+package site_navigator
 
 import (
 	"fmt"
@@ -112,10 +112,10 @@ func filterValidNodes(list []*html.Node, filter FilterErrFunc) ([]*html.Node, er
 	var err error
 
 	if ok {
-		errs := el.GetErrors()
+		errs := el.Errors()
 		err = errs[0]
 	} else {
-		sol = el.GetSolutions()
+		sol = el.Solutions()
 	}
 
 	return sol, err
@@ -158,13 +158,13 @@ func FilterValidNodes(list []*html.Node, filters []FilterErrFunc) ([]*html.Node,
 		ok := el.HasError()
 
 		if ok {
-			errs := el.GetErrors()
+			errs := el.Errors()
 			err := errs[0]
 
 			return nil, err
 		}
 
-		list = el.GetSolutions()
+		list = el.Solutions()
 	}
 
 	return list, nil
@@ -390,7 +390,7 @@ func CEWithSearch[T any](search *SearchCriteria, action ActionType, parse NodeLi
 			el.AddErr(err, 1+len(filters))
 		}
 
-		errList := el.GetErrors()
+		errList := el.Errors()
 
 		reason := NewErrNoNodesFound()
 		err := uc.NewErrPossibleError(reason, errList[0])

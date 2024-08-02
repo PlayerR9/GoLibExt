@@ -1,4 +1,4 @@
-package SiteNavigator
+package site_navigator
 
 import "strings"
 

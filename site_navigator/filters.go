@@ -1,4 +1,4 @@
-package SiteNavigator
+package site_navigator
 
 import (
 	us "github.com/PlayerR9/lib_units/slices"

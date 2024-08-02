@@ -1,11 +1,10 @@
-package SiteNavigator
+package site_navigator
 
 import (
 	"slices"
 
 	"golang.org/x/net/html"
 
-	uc "github.com/PlayerR9/lib_units/common"
 	slext "github.com/PlayerR9/lib_units/slices"
 )
 
@@ -118,7 +117,7 @@ func (sc *SearchCriteria) AppendAttr(key string, val slext.PredicateFilter[strin
 	}
 
 	p := NewAttrPair(key, val)
-	uc.Assert(p != nil, "AppendAttr: NewAttrPair returned nil")
+	// uc.Assert(p != nil, "AppendAttr: NewAttrPair returned nil")
 
 	sc.Attrs = append(sc.Attrs, p)
 

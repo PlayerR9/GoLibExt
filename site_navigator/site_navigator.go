@@ -1,9 +1,10 @@
-package SiteNavigator
+package site_navigator
 
 import (
 	"golang.org/x/net/html"
 
 	uc "github.com/PlayerR9/lib_units/common"
+	luint "github.com/PlayerR9/lib_units/ints"
 	slext "github.com/PlayerR9/lib_units/slices"
 	tr "github.com/PlayerR9/tree/tree"
 )
@@ -235,7 +236,7 @@ func (t *HtmlTree) ExtractNodes(criterias ...slext.PredicateFilter[*html.Node]) 
 		for _, tree := range todo {
 			result, err := tree.MatchNodes(criteria)
 			if err != nil {
-				err := uc.NewErrWhileAt("applying", i+1, "criteria", err)
+				err := luint.NewErrWhileAt("applying", i+1, "criteria", err)
 				return nil, err
 			}
 
@@ -251,7 +252,7 @@ func (t *HtmlTree) ExtractNodes(criterias ...slext.PredicateFilter[*html.Node]) 
 		for i, node := range new_todo {
 			new_tree, err := NewHtmlTree(node)
 			if err != nil {
-				err := uc.NewErrWhileAt("adding", i+1, "tree", err)
+				err := luint.NewErrWhileAt("adding", i+1, "tree", err)
 				return nil, err
 			}
 
